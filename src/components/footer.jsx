@@ -161,7 +161,7 @@ const Footer = () => {
                                 <i className="iconoir-linkedin" />
                             </a></li>
                         </ul>
-                        <p>© 2023 All rights reserved by <a href="https://themeforest.net/user/wordpressriver/portfolio">WordpressRiver</a></p>
+                        <p>© 2025 All rights reserved by <a href="/">Techinfraedge </a></p>
                     </div>
                 </div>
             </div>
