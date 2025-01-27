@@ -1,0 +1,16 @@
+/* Import external CSS files */
+@import url("../../public/assets/css/bootstrap.min.css");
+@import url("../../public/assets/css/swiper-bundle.min.css");
+@import url("../../public/assets/css/style.css");
+@import url("../../public/assets/css/responsive.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+
