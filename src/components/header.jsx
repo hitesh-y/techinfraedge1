@@ -1,46 +1,66 @@
-import Link from "next/link"
+"use client"
 
-const Header = () => {
+import { useState } from "react"
+import Link from "next/link"
+import Image from "next/image"
+
+export default function Header() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [activeDropdown, setActiveDropdown] = useState(null)
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen)
+    }
+
+    const toggleDropdown = (menuName) => {
+        setActiveDropdown(activeDropdown === menuName ? null : menuName)
+    }
+
     return (
         <header className="header-area">
             <div className="custom-container">
                 <div className="custom-row align-items-center justify-content-between">
                     <div className="header-left d-flex align-items-center">
                         <Link href="/" className="logo">
-                            <img src="/assets/imgs/logo.png" alt="Logo" />
+                            <Image src="/assets/imgs/logo.png" alt="Logo" width={150} height={40} />
                         </Link>
+
                         <div className="header-left-right">
-                            <a href="contact.html" className="theme-btn">Contact Us</a>
-                            <span className="menu-bar">
-                                <i className="las la-bars" />
+                            <Link href="/contact" className="theme-btn">
+                                Contact Us
+                            </Link>
+                            <span className="menu-bar" onClick={toggleMobileMenu}>
+                                <i className="iconoir-menu" />
                             </span>
                         </div>
-                        <nav className="navbar-wrapper">
-                            <span className="close-menu-bar">
-                                <i className="las la-times" />
+
+                        <nav className={`navbar-wrapper ${isMobileMenuOpen ? "active" : ""}`}>
+                            <span className="close-menu-bar" onClick={toggleMobileMenu}>
+                                <i className="iconoir-xmark" />
                             </span>
                             <ul>
-                                <li className="dropdown-menu-item">
+                                <li className={`dropdown-menu-item ${activeDropdown === "home" ? "active" : ""}`}>
                                     <Link href="/">Home</Link>
-                                    <span className="dropdown-menu-item-icon">
-                                        <i className="las la-angle-down" />
+                                    <span className="dropdown-menu-item-icon" onClick={() => toggleDropdown("home")}>
+                                        <i className="iconoir-plus" />
                                     </span>
-                                    <ul className="dropdown-menu">
+                                    <ul className={`dropdown-menu ${activeDropdown === "home" ? "show" : ""}`}>
                                         <li>
                                             <Link href="/">IT Services</Link>
                                         </li>
                                         <li>
-                                            <Link href="/">Business Consulting</Link>
+                                            <Link href="/home2">Business Consulting</Link>
                                         </li>
                                     </ul>
                                 </li>
-                                <li className="mega-menu-item">
-                                    <a href="company.html">Company</a>
-                                    <span className="dropdown-menu-item-icon">
-                                        <i className="las la-angle-down" />
+                                {/* Company Mega Menu */}
+                                <li className={`mega-menu-item ${activeDropdown === "company" ? "active" : ""}`}>
+                                    <Link href="/company">Company</Link>
+                                    <span className="dropdown-menu-item-icon" onClick={() => toggleDropdown("company")}>
+                                        <i className="iconoir-plus" />
                                     </span>
-                                    <div className="mega-menu mega-menu-company">
-                                        <div className="mega-menu-inner">
+                                    <div className={`mega-menu mega-menu-company ${activeDropdown === "company" ? "show" : ""}`}>
+                                        <div class="mega-menu-inner">
                                             <div className="custom-container d-flex">
                                                 <div className="left">
                                                     <div className="mega-menu-link-wrap d-flex justify-content-between">
@@ -110,15 +130,17 @@ const Header = () => {
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </li>
-                                <li className="mega-menu-item">
-                                    <a href="portfolio.html">Portfolio</a>
-                                    <span className="dropdown-menu-item-icon">
-                                        <i className="las la-angle-down" />
+                                {/* Portfolio Mega Menu */}
+                                <li className={`mega-menu-item ${activeDropdown === "portfolio" ? "active" : ""}`}>
+                                    <Link href="/portfolio">Portfolio</Link>
+                                    <span className="dropdown-menu-item-icon" onClick={() => toggleDropdown("portfolio")}>
+                                        <i className="iconoir-plus" />
                                     </span>
-                                    <div className="mega-menu mega-menu-portfolio">
+                                    <div className={`mega-menu mega-menu-portfolio ${activeDropdown === "portfolio" ? "show" : ""}`}>
                                         <div className="mega-menu-inner">
                                             <div className="custom-container d-flex">
                                                 <div className="left">
@@ -187,15 +209,17 @@ const Header = () => {
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </li>
-                                <li className="mega-menu-item">
-                                    <a href="service.html">Services</a>
-                                    <span className="dropdown-menu-item-icon">
-                                        <i className="las la-angle-down" />
+                                {/* Services Mega Menu */}
+                                <li className={`mega-menu-item ${activeDropdown === "services" ? "active" : ""}`}>
+                                    <Link href="/service">Services</Link>
+                                    <span className="dropdown-menu-item-icon" onClick={() => toggleDropdown("services")}>
+                                        <i className="iconoir-plus" />
                                     </span>
-                                    <div className="mega-menu">
-                                        <div className="mega-menu-inner">
+                                    <div className={`mega-menu ${activeDropdown === "services" ? "show" : ""}`}>
+                                        <div class="mega-menu-inner">
                                             <div className="custom-container d-flex">
                                                 <div className="left">
                                                     <div className="mega-menu-link-wrap d-flex align-items-start justify-content-between">
@@ -285,11 +309,12 @@ const Header = () => {
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="faq.html">FAQ</a>
+                                    <Link href="/faq">FAQ</Link>
                                 </li>
                             </ul>
                         </nav>
                     </div>
+
                     <div className="header-right">
                         <div className="header-contact-info d-flex align-items-center">
                             <div className="phone-number">
@@ -299,14 +324,14 @@ const Header = () => {
                                 </a>
                                 +91 96538 76904
                             </div>
-                            <a href="contact.html" className="theme-btn">Contact Us</a>
+                            <Link href="/contact" className="theme-btn">
+                                Contact Us
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-
     )
 }
 
-export default Header

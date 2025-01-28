@@ -3,6 +3,7 @@
 @import url("../../public/assets/css/swiper-bundle.min.css");
 @import url("../../public/assets/css/style.css");
 @import url("../../public/assets/css/responsive.css");
+@import url("../../public/assets/css/iconoir.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

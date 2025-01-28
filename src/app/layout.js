@@ -2,7 +2,6 @@
 import "./globals.css";
 import Head from "next/head";
 import Header from "@/components/header";
-import Script from "next/script";
 import Footer from "@/components/footer";
 
 const geistSans = Geist({
