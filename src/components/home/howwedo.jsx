@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Howwedo = ()=>{
     return (
   <section className="how-we-do-area">
@@ -10,10 +12,10 @@ const Howwedo = ()=>{
           <h1 className="section-title">How we do</h1>
           <p>Save time and money with our powerful method.</p>
         </div>
-        <a href="how-we-do.html" className="theme-btn">
+        <Link href="/how-we-do" className="theme-btn">
           Learn More
           <i className="iconoir-arrow-up-right" />
-        </a>
+        </Link>
       </div>
       <div className="how-we-do-right-content">
         <div className="how-we-do-items d-flex align-items-center justify-content-center">

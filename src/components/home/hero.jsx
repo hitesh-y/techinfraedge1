@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Hero = () => {
     return (
         <section className="hero-empowerment-area">
@@ -10,9 +12,9 @@ const Hero = () => {
 
                         <div className="btns-group d-flex">
                             <a href="#" className="theme-btn">Learn More</a>
-                            <a href="contact.html" className="theme-btn2">Let's Talk
+                            <Link href="/contact" className="theme-btn2">Let's Talk
                                 <i className="iconoir-arrow-up-right" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="hero-empowerment-right-content">
@@ -33,7 +35,7 @@ const Hero = () => {
                             </div>
                         </div>
                         <div className="bottom-content d-flex">
-                            <a href="/team.html" className="our-expert-team-box simple-shadow bounce-in delay-2">
+                            <Link href="/team" className="our-expert-team-box simple-shadow bounce-in delay-2">
                                 <div className="our-expert-team-box-inner d-flex align-items-center">
                                     <div className="imgs imgs1 d-flex align-items-center">
                                         <img src="/assets/imgs/small-img-4.png" alt="team" />
@@ -46,7 +48,7 @@ const Hero = () => {
                                         <span>Our Experts</span>
                                     </p>
                                 </div>
-                            </a>
+                            </Link>
                             <div className="google-reviews-box simple-shadow bounce-in delay-3">
                                 <div className="left">
                                     <span>Verified by</span>

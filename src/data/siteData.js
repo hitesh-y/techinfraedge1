@@ -1,0 +1,85 @@
+export const siteData = {
+  logo: "/assets/imgs/logo.png",
+  logoAlt: "Logo",
+  logoWidth: 195,
+  logoHeight: 40,
+  phoneNumber: "+91 96538 76904",
+  email: "hello@techinfraedge.com",
+  supportEmail: "support@techinfraedge.com",
+  companyName: "Techinfraedge",
+  socialLinks: [
+    { icon: "iconoir-dribbble", url: "#" },
+    { icon: "iconoir-twitter", url: "#" },
+    { icon: "iconoir-instagram", url: "#" },
+    { icon: "iconoir-linkedin", url: "#" },
+  ],
+  navLinks: [
+    { name: "Home", url: "/" },
+    {
+      name: "Company",
+      url: "/company",
+      megaMenu: true,
+      subMenu: [
+        { name: "About Us", url: "/about" },
+        { name: "Partners", url: "/partners" },
+        { name: "Careers", url: "/career" },
+        // { name: "Events", url: "/event" },
+        { name: "Team", url: "/team" },
+        { name: "Blog", url: "/blog" },
+      ]
+    },
+    {
+      name: "Portfolio",
+      url: "/portfolio",
+      megaMenu: true,
+    },
+    {
+      name: "Services",
+      url: "/service",
+      megaMenu: true,
+      subMenu: [
+        { name: "Development", url: "/service-details" },
+        { name: "Web Design", url: "/service-details" },
+        { name: "IT Support", url: "/service-details" },
+        { name: "E-Commerce", url: "/service-details" },
+        { name: "Cloud Things", url: "/service-details" },
+        { name: "CRM Solutions", url: "/service-details" },
+      ]
+    },
+    { name: "FAQ", url: "/faq" },
+  ],
+  footerLinks: {
+    services: [
+      { name: "IT Support", url: "/service-details" },
+      { name: "Web Design", url: "/service-details" },
+      { name: "Development", url: "/service-details" },
+      { name: "Cloud Things", url: "/service-details" },
+      { name: "E-Commerce", url: "/service-details" },
+      { name: "CRM Solutions", url: "/service-details" },
+    ],
+    company: [
+      { name: "Blog", url: "/blog" },
+      { name: "About Us", url: "/about" },
+      { name: "Partners", url: "/partner" },
+      { name: "Careers", url: "/career" },
+      // { name: "Events", url: "/event" },
+      { name: "Team", url: "/team" },
+    ],
+    product: [
+      { name: "Case Studies", url: "/case-studie" },
+      // { name: "Our Pricing", url: "/pricing" },
+      { name: "Features", url: "/feature" },
+      { name: "Overview", url: "/overview" },
+      { name: "New Releases", url: "/new-release" },
+      { name: "Solutions", url: "/solution" },
+    ], 
+  },
+  clientLogos: [
+    { name: "Youtube", logo: "/assets/imgs/youtube.svg" },
+    { name: "Webflow", logo: "/assets/imgs/webflow.svg" },
+    { name: "Upwork", logo: "/assets/imgs/upwork.svg" },
+    { name: "Shopify", logo: "/assets/imgs/shopify.svg" },
+  ],
+  address1: `PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR 302020`,
+  address2: `PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR 302020`,
+};
