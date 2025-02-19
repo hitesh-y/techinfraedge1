@@ -1,19 +1,19 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { notFound } from "next/navigation" 
-import { CheckCircle } from "lucide-react"
-import { getServerField } from "next/dist/server/lib/render-server"
+// import { notFound } from "next/navigation" 
+// import { CheckCircle } from "lucide-react"
+// import { getServerField } from "next/dist/server/lib/render-server"
  
 
 export default function ServicePage({ params }) {
-  const service = getServerField(params.id)
+  // const service = getServerField(params.id)
 
-  if (!service) {
-    notFound()
-  }
+  // if (!service) {
+  //   notFound()
+  // }
 
-  const Icon = service.icon
+  // const Icon = service.icon
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -21,7 +21,7 @@ export default function ServicePage({ params }) {
         ← Back to Services
       </Link>
 
-      <div className="grid lg:grid-cols-2 gap-12">
+      {/* <div className="grid lg:grid-cols-2 gap-12">
         <div>
           <div className="flex items-center gap-4 mb-6">
             <div className="p-3 rounded-xl bg-primary/10 text-primary">
@@ -82,7 +82,7 @@ export default function ServicePage({ params }) {
             className="object-cover rounded-xl"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
