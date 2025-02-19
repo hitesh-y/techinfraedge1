@@ -55,24 +55,24 @@ export default function Header() {
                                                             <div className="mega-menu-link-wrap d-flex justify-content-between"> 
                                                                 <div className="mega-menu-links d-flex">
                                                                     <div className="mega-menu-link">
-                                                                        <h3>Company</h3>
+                                                                        {/* <h3>Company</h3> */}
                                                                         <ul>
                                                                             {link.subMenu.map((subLink, subIndex) => (
                                                                                 <li key={subIndex}><Link href={subLink.url}>{subLink.name}</Link></li>
                                                                             ))}
                                                                         </ul>
                                                                     </div>
-                                                                    <div className="mega-menu-link">
+                                                                    {/* <div className="mega-menu-link">
                                                                         <h3>Product</h3>
                                                                         <ul>
-                                                                            <li><a href="overview.html">Overview</a></li>
-                                                                            {/* <li><a href="pricing.html">Pricing</a></li> */}
-                                                                            <li><a href="feature.html">Features</a></li>
-                                                                            <li><a href="case-studie.html">Case Studies</a></li>
-                                                                            <li><a href="new-release.html">New Releases</a></li>
-                                                                            <li><a href="solution.html">Solutions</a></li>
+                                                                            <li><Link href="overview">Overview</Link></li>
+                                                                            <li><a href="pricing">Pricing</a></li>
+                                                                            <li><Link href="feature">Features</Link></li>
+                                                                            <li><Link href="case-studie">Case Studies</Link></li>
+                                                                            <li><Link href="new-release">New Releases</Link></li>
+                                                                            <li><Link href="solution">Solutions</Link></li>
                                                                         </ul>
-                                                                    </div> 
+                                                                    </div>  */}
                                                                 </div>
                                                             </div>
                                                             <div className="mega-meu-footer d-flex align-items-center justify-content-between w-full">
@@ -89,7 +89,7 @@ export default function Header() {
                                                                 <img src="/assets/imgs/iphone-13-1.jpg" alt="Iphone" />
                                                                 <h2>Solution in your hand</h2>
                                                                 <p>Develop IT solutions based on the<br /> analysis phase.</p>
-                                                                <a href="case-studie-single.html">View more</a>
+                                                                <a href="case-studie-single">View more</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -107,7 +107,7 @@ export default function Header() {
                                                                         <img src="/assets/imgs/portfolio-mega-menu-1.jpg" alt="Portfolio" />
                                                                     </div>
                                                                     <div className="content-box">
-                                                                        <h3><a href="portfolio-details.html">E-commerce</a></h3>
+                                                                        <h3><Link href="/">E-commerce</Link></h3>
                                                                         <p>we undertook a project to <br />migrate their existing.</p>
                                                                     </div>
                                                                 </div>
@@ -116,7 +116,7 @@ export default function Header() {
                                                                         <img src="/assets/imgs/portfolio-mega-menu-2.jpg" alt="Portfolio" />
                                                                     </div>
                                                                     <div className="content-box">
-                                                                        <h3><a href="portfolio-details.html">App Development</a></h3>
+                                                                        <h3><Link href="/">App Development</Link></h3>
                                                                         <p>The mobile application has <br />significantly improved.</p>
                                                                     </div>
                                                                 </div>
@@ -125,7 +125,7 @@ export default function Header() {
                                                                         <img src="/assets/imgs/portfolio-mega-menu-3.jpeg" alt="Portfolio" />
                                                                     </div>
                                                                     <div className="content-box">
-                                                                        <h3><a href="portfolio-details.html">SAAS Integration</a></h3>
+                                                                        <h3><Link href="/">SAAS Integration</Link></h3>
                                                                         <p>We partnered with DEF to <br />upgrade their outdated IT.</p>
                                                                     </div>
                                                                 </div>
@@ -134,7 +134,7 @@ export default function Header() {
                                                                         <img src="/assets/imgs/portfolio-mega-menu-4.jpeg" alt="Portfolio" />
                                                                     </div>
                                                                     <div className="content-box">
-                                                                        <h3><a href="portfolio-details.html">Virtual Reality</a></h3>
+                                                                        <h3><Link href="/">Virtual Reality</Link></h3>
                                                                         <p>Enter into the virtual reality <br />world for real experience.</p>
                                                                     </div>
                                                                 </div>
@@ -145,7 +145,7 @@ export default function Header() {
                                                                         <li key={index}><a href={social.url}><i className={social.icon} /></a></li>
                                                                     ))}
                                                                 </ul>
-                                                                <p><a href="portfolio.html">View Portfolio <i className="iconoir-arrow-up-right" /></a></p>
+                                                                <p><Link href="/">View Portfolio <i className="iconoir-arrow-up-right" /></Link></p>
                                                             </div>
                                                         </div>
                                                         <div className="right">
@@ -153,7 +153,7 @@ export default function Header() {
                                                                 <img src="/assets/imgs/macbook.jpg" alt="iPad" />
                                                                 <h2>Mobile app for a new era</h2>
                                                                 <p>Download slack in your mobile for <br />your daily usage.</p>
-                                                                <a href="case-studie-single.html">View more</a>
+                                                                <a href="case-studie-single">View more</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -172,7 +172,7 @@ export default function Header() {
                                                                             <img src="/assets/imgs/hwd-icon-1.svg" alt="Service" />
                                                                         </span>
                                                                         <div className="content">
-                                                                            <h2><a href="how-we-do-single.html">Brainstroming</a></h2>
+                                                                            <h2><Link href="how-we-do-single">Brainstroming</Link></h2>
                                                                             <p>Ideas</p>
                                                                         </div>
                                                                     </div>
@@ -181,7 +181,7 @@ export default function Header() {
                                                                             <img src="/assets/imgs/hwd-icon-4.svg" alt="Service" />
                                                                         </span>
                                                                         <div className="content">
-                                                                            <h2><a href="how-we-do-single.html">Product</a></h2>
+                                                                            <h2><Link href="how-we-do-single">Product</Link></h2>
                                                                             <p>Design</p>
                                                                         </div>
                                                                     </div>
@@ -190,7 +190,7 @@ export default function Header() {
                                                                             <img src="/assets/imgs/hwd-icon-2.svg" alt="Service" />
                                                                         </span>
                                                                         <div className="content">
-                                                                            <h2><a href="how-we-do-single.html">SEO</a></h2>
+                                                                            <h2><Link href="how-we-do-single">SEO</Link></h2>
                                                                             <p>Optimization</p>
                                                                         </div>
                                                                     </div>
@@ -199,7 +199,7 @@ export default function Header() {
                                                                             <img src="/assets/imgs/hwd-icon-3.svg" alt="Service" />
                                                                         </span>
                                                                         <div className="content">
-                                                                            <h2><a href="how-we-do-single.html">Front-End</a></h2>
+                                                                            <h2><Link href="how-we-do-single">Front-End</Link></h2>
                                                                             <p>Development</p>
                                                                         </div>
                                                                     </div>
@@ -221,7 +221,7 @@ export default function Header() {
                                                                         <li key={index}><a href={social.url}><i className={social.icon} /></a></li>
                                                                     ))}
                                                                 </ul>
-                                                                <p>Looking for new career? <a href="career.html">We're hiring</a></p>
+                                                                <p>Looking for new career? <a href="career">We're hiring</a></p>
                                                             </div>
                                                         </div>
                                                         <div className="right">
@@ -229,7 +229,7 @@ export default function Header() {
                                                                 <img src="/assets/imgs/ipad.jpg" alt="iPad" />
                                                                 <h2>Our product hits</h2>
                                                                 <p>Our new best IT product of the <br />year 2023.</p>
-                                                                <a href="case-studie-single.html">View more</a>
+                                                                <a href="case-studie-single">View more</a>
                                                             </div>
                                                         </div>
                                                     </div>

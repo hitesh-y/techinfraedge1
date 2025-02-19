@@ -15,7 +15,7 @@ const About = () => {
                             </div>
                             <div className="hero-company-boxes">
                                 <div className="hero-company-box simple-shadow">
-                                    <h2>300+</h2>
+                                    <h2>210+</h2>
                                     <h4>Projects</h4>                <p>We are spread around the world.</p>
                                 </div>
                                 <div className="hero-company-box simple-shadow">
@@ -23,11 +23,11 @@ const About = () => {
                                     <h4>Client Satisfaction</h4>                <p>Our clients a happy with our service.</p>
                                 </div>
                                 <div className="hero-company-box simple-shadow">
-                                    <h2>15k</h2>
+                                    <h2>120</h2>
                                     <h4>Legal Customers</h4>                <p>Our customers are from many countries.</p>
                                 </div>
                                 <div className="hero-company-box simple-shadow">
-                                    <h2>1995</h2>
+                                    <h2>2023</h2>
                                     <h4>We Established On</h4>                <p>Our company have a
                                         great history.</p>
                                 </div>

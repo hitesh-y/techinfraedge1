@@ -17,7 +17,7 @@ const Footer = () => {
                 We provide the expertise and support to <br />
                 propel your business forward.
               </p>
-              <form action="assets/mail/subscribe.php" method="POST" className="subscribe-form">
+              <form  method="POST" className="subscribe-form">
                 <div className="subscribe-box d-flex">
                   <input type="email" id="email" name="email" placeholder="Enter Your Email" />
                   <button id="submit2" className="theme-btn">
@@ -62,7 +62,7 @@ const Footer = () => {
                   </div>
                   <div className="footer-experience-item">
                     <h1>
-                      22+ <span>Years</span>
+                      2+ <span>Years</span>
                     </h1>
                     <p>Field Experience</p>
                   </div>

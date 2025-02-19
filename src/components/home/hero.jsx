@@ -25,7 +25,7 @@ const Hero = () => {
                                 <div className="experience-body d-flex align-items-center">
                                     <img src="/assets/imgs/icon1.svg" alt="Icon" />
                                     <div className="experience-content d-flex align-items-center">
-                                        <h1>+8</h1>
+                                        <h1>+2</h1>
                                         <p>
                                             Years
                                             <span>Experience</span>
@@ -35,7 +35,7 @@ const Hero = () => {
                             </div>
                         </div>
                         <div className="bottom-content d-flex">
-                            <Link href="/team" className="our-expert-team-box simple-shadow bounce-in delay-2">
+                            <Link href="/" className="our-expert-team-box simple-shadow bounce-in delay-2">
                                 <div className="our-expert-team-box-inner d-flex align-items-center">
                                     <div className="imgs imgs1 d-flex align-items-center">
                                         <img src="/assets/imgs/small-img-4.png" alt="team" />
