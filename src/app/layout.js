@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}  >
         <main className="main-page homepage">
           {/* <!-- Header Bar --> */}
-          <div className="header-bar">
+          {/* <div className="header-bar">
             <div className="custom-container">
               <div className="header-bar-body d-flex align-items-center justify-content-between">
                 <div className="left">
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <Header />
           {children}
           <Footer/>

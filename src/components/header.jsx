@@ -81,7 +81,7 @@ export default function Header() {
                                                                         <li key={index}><a href={social.url}><i className={social.icon} /></a></li>
                                                                     ))}
                                                                 </ul>
-                                                                <p>Looking for new career? <a href="career.html">We're hiring</a></p>
+                                                                <p>Looking for new career? <Link href="/career">We're hiring</Link></p>
                                                             </div>
                                                         </div>
                                                         <div className="right">

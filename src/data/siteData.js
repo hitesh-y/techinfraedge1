@@ -1,7 +1,7 @@
 export const siteData = {
-  logo: "/assets/imgs/logo.png",
+  logo: "/assets/imgs/Logo.png",
   logoAlt: "Logo",
-  logoWidth: 195,
+  logoWidth: 100,
   logoHeight: 40,
   phoneNumber: "+91 96538 76904",
   email: "hello@techinfraedge.com",
