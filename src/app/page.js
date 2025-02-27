@@ -3,7 +3,9 @@ import Casestudio from "@/components/home/casestudio";
 import Client from "@/components/home/client";
 import Hero from "@/components/home/hero";
 import Howwedo from "@/components/home/howwedo";
+import Projects from "@/components/home/Projects";
 import Service from "@/components/home/service"; 
+import Testimonials from "@/components/home/testimonials";
 
 export default function Home() {
   return (
@@ -14,6 +16,8 @@ export default function Home() {
   <Service/>
   <Casestudio/>
   <About/>
+  <Testimonials/>
+  <Projects/>
   </>
   );
 }
