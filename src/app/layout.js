@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Techinfraedge",
-  description: "Techinfraedge",
+  title: "Jsbglobalinfotech",
+  description: "Jsbglobalinfotech",
 };
 
 export default function RootLayout({ children }) {
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
                 </div>
                 <div className="right">
                   <p>
-                    Level up your business with <a href="about.html" data-word="Techinfraedge." id="dataWord">Techinfraedge.</a>
+                    Level up your business with <a href="about.html" data-word="Jsbglobalinfotech." id="dataWord">Jsbglobalinfotech.</a>
                   </p>
                 </div>
               </div>

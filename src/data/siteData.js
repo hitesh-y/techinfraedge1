@@ -4,8 +4,8 @@ export const siteData = {
   logoWidth: 100,
   logoHeight: 40,
   phoneNumber: "+91 96538 76904",
-  email: "hello@techinfraedge.com",
-  supportEmail: "sachin@techinfraedge.com",
+  email: "hello@Jsbglobalinfotech.com",
+  supportEmail: "sachin@Jsbglobalinfotech.com",
   companyName: "Jsbglobalinfotech",
   socialLinks: [
     { icon: "iconoir-dribbble", url: "#" },
