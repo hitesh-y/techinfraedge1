@@ -1,9 +1,10 @@
- import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { siteData } from "@/data/siteData";
+import PopupForm from "@/components/PopupForm";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,39 +39,13 @@ export default function RootLayout({ children }) {
       </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}  >
         <main className="main-page homepage">
-          {/* <!-- Header Bar --> */}
-          {/* <div className="header-bar">
-            <div className="custom-container">
-              <div className="header-bar-body d-flex align-items-center justify-content-between">
-                <div className="left">
-                  <select className="country-select" name="country" id="country">
-                    <option value="en">EN</option>
-                    <option value="uk">UK</option>
-                    <option value="dz">DZ</option>
-                  </select>
-                </div>
-                <div className="right">
-                  <p>
-                    Level up your business with <a href="about.html" data-word="Jsbglobalinfotech." id="dataWord">Jsbglobalinfotech.</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <Header />
           {children}
-          <Footer/>
+          <Footer />
+          <div>
+            <PopupForm />
+          </div>
         </main>
-        {/* <!-- jQuery Frameworks  ============================================= --> */}
-        {/* <Script src="/assets/js/jquery-3.7.0.min.js"></Script>
-        <Script src="/assets/js/bootstrap.bundle.min.js"></Script>
-        <Script src="/assets/js/gsap.min.js"></Script>
-        <Script src="/assets/js/Draggable.min.js"></Script>
-        <Script src="/assets/js/swiper-bundle.min.js"></Script>
-        <Script src="/assets/js/client-marquee.js"></Script>
-        <Script src="/assets/js/theme-custom.js"></Script>
-        <Script src="/assets/js/form1.js"></Script>
-        <Script src="/assets/js/subscribe-form.js"></Script> */}
       </body>
     </html>
   );

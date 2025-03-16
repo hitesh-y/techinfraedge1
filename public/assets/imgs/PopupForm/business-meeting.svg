@@ -1,0 +1,50 @@
+<svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.8">
+    <path d="M450 150C450 150 400 50 300 80C200 110 150 20 100 50C50 80 20 150 50 200C80 250 150 280 250 250C350 220 450 200 450 150Z" fill="#E6F0FF" stroke="#A0C0FF" stroke-width="2"/>
+    <path d="M300 180C300 180 320 160 350 170C380 180 400 170 410 150" stroke="#A0C0FF" stroke-width="2"/>
+    <path d="M100 120C100 120 120 100 150 110C180 120 200 110 210 90" stroke="#A0C0FF" stroke-width="2"/>
+    <path d="M200 220C200 220 220 200 250 210C280 220 300 210 310 190" stroke="#A0C0FF" stroke-width="2"/>
+    
+    <!-- Buildings -->
+    <path d="M150 200V100H170V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M180 200V80H200V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M210 200V90H230V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M240 200V70H260V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M270 200V85H290V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M300 200V60H320V200" stroke="#333" stroke-width="1.5"/>
+    <path d="M330 200V75H350V200" stroke="#333" stroke-width="1.5"/>
+    
+    <!-- Windows -->
+    <rect x="155" y="110" width="10" height="5" fill="#333"/>
+    <rect x="155" y="125" width="10" height="5" fill="#333"/>
+    <rect x="155" y="140" width="10" height="5" fill="#333"/>
+    <rect x="155" y="155" width="10" height="5" fill="#333"/>
+    <rect x="155" y="170" width="10" height="5" fill="#333"/>
+    <rect x="155" y="185" width="10" height="5" fill="#333"/>
+    
+    <rect x="185" y="90" width="10" height="5" fill="#333"/>
+    <rect x="185" y="105" width="10" height="5" fill="#333"/>
+    <rect x="185" y="120" width="10" height="5" fill="#333"/>
+    <rect x="185" y="135" width="10" height="5" fill="#333"/>
+    <rect x="185" y="150" width="10" height="5" fill="#333"/>
+    <rect x="185" y="165" width="10" height="5" fill="#333"/>
+    <rect x="185" y="180" width="10" height="5" fill="#333"/>
+    
+    <!-- People -->
+    <circle cx="220" cy="220" r="15" fill="#000"/>
+    <path d="M220 235V260" stroke="#000" stroke-width="3"/>
+    <path d="M220 245L205 260" stroke="#000" stroke-width="3"/>
+    <path d="M220 245L235 260" stroke="#000" stroke-width="3"/>
+    <path d="M210 270L220 260L230 270" stroke="#000" stroke-width="3"/>
+    
+    <circle cx="280" cy="220" r="15" fill="#000"/>
+    <path d="M280 235V260" stroke="#000" stroke-width="3"/>
+    <path d="M280 245L265 260" stroke="#000" stroke-width="3"/>
+    <path d="M280 245L295 260" stroke="#000" stroke-width="3"/>
+    <path d="M270 270L280 260L290 270" stroke="#000" stroke-width="3"/>
+    
+    <!-- Handshake -->
+    <path d="M235 240L265 240" stroke="#000" stroke-width="3"/>
+  </g>
+</svg>
+

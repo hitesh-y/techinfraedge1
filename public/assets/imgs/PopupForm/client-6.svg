@@ -1,0 +1,6 @@
+<svg width="80" height="30" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 5H65C68.866 5 72 8.13401 72 12V18C72 21.866 68.866 25 65 25H15C11.134 25 8 21.866 8 18V12C8 8.13401 11.134 5 15 5Z" fill="#F5F5F5"/>
+  <path d="M25 15C25 12.2386 27.2386 10 30 10H50C52.7614 10 55 12.2386 55 15V15C55 17.7614 52.7614 20 50 20H30C27.2386 20 25 17.7614 25 15V15Z" fill="#1428A0"/>
+  <text x="40" y="18" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="white">SAMSUNG</text>
+</svg>
+

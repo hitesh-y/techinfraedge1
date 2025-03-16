@@ -1,0 +1,6 @@
+<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="35" cy="35" r="34" fill="#F5F5F5" stroke="#333333" stroke-width="2"/>
+  <path d="M35 15L39.8167 25.9833L51.7846 27.1967L42.925 35.5167L45.6334 47.3033L35 41.25L24.3666 47.3033L27.075 35.5167L18.2154 27.1967L30.1833 25.9833L35 15Z" fill="#FFD700" stroke="#333333" stroke-width="1.5"/>
+  <text x="35" y="42" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#333333">TOP</text>
+</svg>
+
