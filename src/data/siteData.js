@@ -3,9 +3,9 @@ export const siteData = {
   logoAlt: "Logo",
   logoWidth: 100,
   logoHeight: 40,
-  phoneNumber: "+91 96538 76904",
-  email: "hello@Jsbglobalinfotech.com",
-  supportEmail: "sachin@Jsbglobalinfotech.com",
+  phoneNumber: "+91 92661 36004",
+  email: "info@Jsbglobalinfotech.com",
+  supportEmail: "info@Jsbglobalinfotech.com",
   companyName: "Jsbglobalinfotech",
   socialLinks: [
     { icon: "iconoir-dribbble", url: "#" },
