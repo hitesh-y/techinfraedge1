@@ -74,30 +74,36 @@ const Contact = () => {
                                                         <div className="contact-locations-list">
                                                             <div className="contact-location-box">
                                                                 <div className="number">
-                                                                    #1              </div>
+                                                                    {siteData.address1.country} </div>
                                                                 <div className="content">
-                                                                    <p>{siteData.address1}</p>
+                                                                    <p>{siteData.address1.address}</p> 
+                                                                    <p className="text-success">
+                                                                        <i className="iconoir-phone" /> {siteData.address1.number}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div className="contact-location-box">
                                                                 <div className="number">
-                                                                    #2              </div>
+                                                                    {siteData.address1.country}        </div>
                                                                 <div className="content">
-                                                                    <p>{siteData.address2}</p>
+                                                                    <p>{siteData.address1.address}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="contact-location-box">
                                                                 <div className="number">
-                                                                    #3              </div>
+                                                                    {siteData.address2.country}              </div>
                                                                 <div className="content">
-                                                                    <p>{siteData.address2}</p>
+                                                                    <p>{siteData.address2.address}</p>
+                                                                    <p className="text-success">
+                                                                        <i className="iconoir-phone" /> {siteData.address2.number}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div className="contact-location-box">
                                                                 <div className="number">
-                                                                    #4              </div>
+                                                                    {siteData.address2.country}             </div>
                                                                 <div className="content">
-                                                                    <p>{siteData.address2}</p>
+                                                                    <p>{siteData.address2.address}</p>
                                                                 </div>
                                                             </div>
                                                         </div>

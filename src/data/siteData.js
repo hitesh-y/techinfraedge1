@@ -1,5 +1,5 @@
 export const siteData = {
-  logo: "/assets/imgs/Logo.png",
+  logo: "/assets/imgs/Logo.jpeg",
   logoAlt: "Logo",
   logoWidth: 100,
   logoHeight: 40,
@@ -80,6 +80,6 @@ export const siteData = {
     { name: "Upwork", logo: "/assets/imgs/upwork.svg" },
     { name: "Shopify", logo: "/assets/imgs/shopify.svg" },
   ],
-  address1: `PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR 302020`,
-  address2: `PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR 302020`,
+  address1:{address: `PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR 302020`, number:'+91 92661 36004',country:'India'},
+  address2:{ address:`AI KHABISI, HOR AI ANZ DEIRA, DUBAI UAE`,number:'00971582156093' ,country:'UAE'},
 };
