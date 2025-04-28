@@ -1,24 +1,22 @@
 import About from "@/components/home/about";
 import Casestudio from "@/components/home/casestudio";
-import Client from "@/components/home/client";
-import Hero from "@/components/home/hero";
-import Heromain from "@/components/home/heromain";
+import Client from "@/components/home/client"; 
+import HeroTCSExact from "@/components/home/hero-tcs-exact";
 import Howwedo from "@/components/home/howwedo";
 import Projects from "@/components/home/Projects";
-import Service from "@/components/home/service"; 
-import Testimonials from "@/components/home/testimonials";
+import ServiceAnimated from "@/components/home/service-animated"; 
+import TestimonialsAnimated from "@/components/home/testimonials-animated";
 
 export default function Home() {
   return (
   <>
-  <Heromain/>
-  <Hero/>
+  <HeroTCSExact/>
   <Client/>
   <Howwedo/>
-  <Service/>
+  <ServiceAnimated/>
   <Casestudio/>
   <About/>
-  <Testimonials/>
+  <TestimonialsAnimated/>
   <Projects/>
   </>
   );

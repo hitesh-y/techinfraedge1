@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Header from "@/components/header-tcs-fixed-final";
+import Footer from "@/components/footer-tcs-final";
 import { siteData } from "@/data/siteData";
 import PopupForm from "@/components/PopupForm";
 

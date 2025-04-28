@@ -56,7 +56,7 @@ const Client = () => {
   ]
 
   return (
-    <section className="py-12 bg-gray-100">
+    <section className="py-12 bg-gray-100 mt-10">
       <div className="container mx-auto px-4">
         
           <Slider {...settings}>

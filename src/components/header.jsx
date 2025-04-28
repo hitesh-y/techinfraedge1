@@ -1,12 +1,29 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { siteData } from "../data/siteData"
+import { Phone, Mail, Menu, X, ChevronDown, Search, Globe, Clock } from "lucide-react"
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [activeDropdown, setActiveDropdown] = useState(null)
+    const [scrolled, setScrolled] = useState(false)
+    const [searchOpen, setSearchOpen] = useState(false)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const isScrolled = window.scrollY > 50
+            if (isScrolled !== scrolled) {
+                setScrolled(isScrolled)
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [scrolled])
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -16,36 +33,109 @@ export default function Header() {
         setActiveDropdown(activeDropdown === menuName ? null : menuName)
     }
 
-    return (
-        <header className="header-area">
-            <div className="custom-container">
-                <div className="custom-row align-items-center justify-content-between">
-                    <div className="header-left d-flex align-items-center">
-                        <Link href="/" className="logo">
-                            <Image src={siteData.logo || "/placeholder.svg"} alt={siteData.logoAlt} width={siteData.logoWidth} height={siteData.logoHeight} />
-                        </Link>
+    const toggleSearch = () => {
+        setSearchOpen(!searchOpen)
+    }
 
-                        <div className="header-left-right">
-                            <Link href="/contact" className="theme-btn">
-                                Contact Us
+    return (
+        <>
+            {/* Top Bar */}
+            <div className="bg-primary text-white py-2 hidden md:block">
+                <div className="container mx-auto px-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center space-x-6">
+                            <div className="flex items-center space-x-2">
+                                <Phone size={16} />
+                                <span className="text-sm">{siteData.phoneNumber}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <Mail size={16} />
+                                <span className="text-sm">{siteData.email}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <Clock size={16} />
+                                <span className="text-sm">Mon-Fri: 9:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            {siteData.socialLinks.map((social, index) => (
+                                <a key={index} href={social.url} className="hover:text-gray-200 transition-colors">
+                                    <i className={social.icon} />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Header */}
+            <header className={`header-area sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 py-4'}`}>
+                <div className="container mx-auto px-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <Link href="/" className="logo mr-8">
+                                <Image src={siteData.logo || "/placeholder.svg"} alt={siteData.logoAlt} width={siteData.logoWidth} height={siteData.logoHeight} className="transition-all duration-300" style={{ height: scrolled ? '35px' : '40px', width: 'auto' }} />
                             </Link>
-                            <span className="menu-bar" onClick={toggleMobileMenu}>
-                                <i className="iconoir-menu" />
-                            </span>
                         </div>
 
-                        <nav className={`navbar-wrapper ${isMobileMenuOpen ? "active" : ""}`}>
-                            <span className="close-menu-bar" onClick={toggleMobileMenu}>
-                                <i className="iconoir-xmark" />
-                            </span>
-                            <ul>
+                        <div className="flex items-center space-x-4">
+                            <button 
+                                onClick={toggleSearch}
+                                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                aria-label="Search"
+                            >
+                                <Search size={20} />
+                            </button>
+                            
+                            <Link 
+                                href="/contact" 
+                                className="hidden md:flex items-center px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors font-medium"
+                            >
+                                Contact Us
+                            </Link>
+                            
+                            <button 
+                                className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                onClick={toggleMobileMenu}
+                                aria-label="Menu"
+                            >
+                                <Menu size={24} />
+                            </button>
+                        </div>
+
+                        {/* Desktop Navigation */}
+                        <nav className="hidden md:flex items-center ml-8">
+                            <ul className="flex space-x-6">
                                 {siteData.navLinks.map((link, index) => (
-                                    <li key={index} className={`${link.megaMenu ? 'mega-menu-item' : ''} ${activeDropdown === link.name.toLowerCase() ? 'active' : ''}`}>
-                                        <Link href={link.url}>{link.name}</Link>
+                                    <li key={index} className="relative group">
+                                        <Link 
+                                            href={link.url} 
+                                            className="flex items-center py-2 text-gray-800 hover:text-primary transition-colors font-medium"
+                                        >
+                                            {link.name}
+                                            {link.megaMenu && (
+                                                <ChevronDown size={16} className="ml-1 group-hover:rotate-180 transition-transform duration-300" />
+                                            )}
+                                        </Link>
                                         {link.megaMenu && (
-                                            <span className="dropdown-menu-item-icon" onClick={() => toggleDropdown(link.name.toLowerCase())}>
-                                                <i className="iconoir-plus" />
-                                            </span>
+                                            <div className="absolute left-0 top-full w-max bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                                                <div className="p-4">
+                                                    {link.subMenu && (
+                                                        <ul className="grid grid-cols-2 gap-2 min-w-[320px]">
+                                                            {link.subMenu.map((subLink, subIndex) => (
+                                                                <li key={subIndex}>
+                                                                    <Link 
+                                                                        href={subLink.url} 
+                                                                        className="block px-4 py-2 hover:bg-gray-50 rounded-md text-gray-700 hover:text-primary transition-colors"
+                                                                    >
+                                                                        {subLink.name}
+                                                                    </Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </div>
+                                            </div>
                                         )}
                                         {link.megaMenu && link.name === "Company" && (
                                             <div className={`mega-menu mega-menu-company ${activeDropdown === 'company' ? 'show' : ''}`}>

@@ -1,7 +1,32 @@
-import { Brain, Cloud, Rocket, Code, Globe } from "lucide-react"
- 
+import { Brain, Cloud, Rocket, Code, Globe, Layout, Headphones as HeadphonesIcon, Store, CloudCog, UserCheck, Bot, Cpu, Sparkles, Zap, BarChart3, ShieldCheck } from "lucide-react"
 
 export const services = [
+    {
+      id: "ai-automation",
+      title: "AI Automation",
+      shortDescription: "Intelligent automation solutions powered by artificial intelligence",
+      icon: Bot,
+      fullDescription:
+        "Transform your business operations with our cutting-edge AI automation solutions. We leverage the latest advancements in artificial intelligence, machine learning, and natural language processing to automate complex tasks, streamline workflows, and drive innovation across your organization.",
+      features: [
+        "Intelligent process automation",
+        "Natural language processing",
+        "Machine learning implementation",
+        "Computer vision solutions",
+        "Predictive analytics",
+        "Conversational AI & chatbots",
+        "Workflow optimization",
+      ],
+      expertise: ["TensorFlow", "PyTorch", "OpenAI", "Computer Vision", "NLP", "Reinforcement Learning", "MLOps"],
+      image: "/placeholder.svg?height=400&width=600",
+      benefits: [
+        "Increased operational efficiency",
+        "Reduced manual workload",
+        "Enhanced decision-making capabilities",
+        "Improved customer experiences",
+        "Scalable and adaptable solutions",
+      ],
+    },
     {
       id: "development",
       title: "Development",
