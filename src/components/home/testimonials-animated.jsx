@@ -10,7 +10,7 @@ const TestimonialsAnimated = () => {
     const testimonials = [
         {
             id: 1,
-            quote: "JSB Global Infotech transformed our business with their innovative IT solutions. Their team's expertise and dedication to our project exceeded our expectations.",
+            quote: "TechInfraEdge transformed our business with their innovative IT solutions. Their team's expertise and dedication to our project exceeded our expectations.",
             author: "Sarah Johnson",
             position: "CTO, Global Enterprises",
             company: "Global Enterprises",
@@ -18,7 +18,7 @@ const TestimonialsAnimated = () => {
         },
         {
             id: 2,
-            quote: "Working with JSB Global Infotech has been a game-changer for our company. Their AI automation solutions have significantly improved our operational efficiency.",
+            quote: "Working with TechInfraEdge has been a game-changer for our company. Their AI automation solutions have significantly improved our operational efficiency.",
             author: "Michael Chen",
             position: "Director of Operations",
             company: "TechCorp",
@@ -26,7 +26,7 @@ const TestimonialsAnimated = () => {
         },
         {
             id: 3,
-            quote: "The web design and development services provided by JSB Global Infotech are exceptional. They delivered a stunning website that perfectly represents our brand.",
+            quote: "The web design and development services provided by TechInfraEdge are exceptional. They delivered a stunning website that perfectly represents our brand.",
             author: "Emily Rodriguez",
             position: "Marketing Director",
             company: "Innovate Solutions",
@@ -65,13 +65,13 @@ const TestimonialsAnimated = () => {
     };
     
     return (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-900">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h5 className="text-primary font-medium mb-3">TESTIMONIALS</h5>
-                    <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-                    <p className="text-muted-foreground max-w-2xl mx-auto">
-                        Hear from our satisfied clients about their experience working with JSB Global Infotech.
+                    <h5 className="text-indigo-400 font-medium mb-3">TESTIMONIALS</h5>
+                    <h2 className="text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
+                    <p className="text-gray-300 max-w-2xl mx-auto">
+                        Hear from our satisfied clients about their experience working with TechInfraEdge.
                     </p>
                 </div>
                 
@@ -85,15 +85,15 @@ const TestimonialsAnimated = () => {
                         >
                             {testimonials.map((testimonial) => (
                                 <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
-                                    <div className="bg-white rounded-xl p-8 shadow-sm">
-                                        <div className="text-primary mb-6">
+                                    <div className="bg-gray-800 rounded-xl p-8 shadow-lg border border-indigo-500/20">
+                                        <div className="text-indigo-400 mb-6">
                                             <Quote size={48} />
                                         </div>
-                                        <blockquote className="text-xl italic mb-8">
+                                        <blockquote className="text-xl italic mb-8 text-white">
                                             "{testimonial.quote}"
                                         </blockquote>
                                         <div className="flex items-center">
-                                            <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-primary">
+                                            <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-indigo-500">
                                                 <img 
                                                     src={testimonial.image} 
                                                     alt={testimonial.author}
@@ -101,9 +101,9 @@ const TestimonialsAnimated = () => {
                                                 />
                                             </div>
                                             <div>
-                                                <div className="font-bold text-lg">{testimonial.author}</div>
-                                                <div className="text-sm text-muted-foreground">{testimonial.position}</div>
-                                                <div className="text-sm text-primary">{testimonial.company}</div>
+                                                <div className="font-bold text-lg text-white">{testimonial.author}</div>
+                                                <div className="text-sm text-gray-300">{testimonial.position}</div>
+                                                <div className="text-sm text-indigo-400">{testimonial.company}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -115,14 +115,14 @@ const TestimonialsAnimated = () => {
                     {/* Navigation Buttons */}
                     <button 
                         onClick={prevSlide}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-110 z-10"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-indigo-600 shadow-lg flex items-center justify-center text-white hover:bg-indigo-700 transition-all duration-300 transform hover:scale-110 z-10"
                         disabled={isAnimating}
                     >
                         <ChevronLeft size={24} />
                     </button>
                     <button 
                         onClick={nextSlide}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-110 z-10"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full bg-indigo-600 shadow-lg flex items-center justify-center text-white hover:bg-indigo-700 transition-all duration-300 transform hover:scale-110 z-10"
                         disabled={isAnimating}
                     >
                         <ChevronRight size={24} />
@@ -142,8 +142,8 @@ const TestimonialsAnimated = () => {
                                 }}
                                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                                     index === currentSlide 
-                                        ? 'bg-primary w-8' 
-                                        : 'bg-gray-300 hover:bg-gray-400'
+                                        ? 'bg-indigo-500 w-8' 
+                                        : 'bg-gray-600 hover:bg-gray-500'
                                 }`}
                                 aria-label={`Go to slide ${index + 1}`}
                             />

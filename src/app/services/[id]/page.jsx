@@ -1,11 +1,53 @@
 
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation" 
-import { CheckCircle, ArrowRight, Clock, Users, BarChart3, Award, Zap, MessageSquare } from "lucide-react"
+import { CheckCircle, ArrowRight, ArrowLeft, Clock, Users, BarChart3, Award, Zap, MessageSquare, Sparkles } from "lucide-react"
 import { getServiceById } from "@/data/servicesData"
+import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 export default function ServicePage({ params }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  useEffect(() => {
+    setIsLoaded(true);
+    
+    // Add 3D tilt effect to feature cards
+    const addTiltEffect = () => {
+      const cards = document.querySelectorAll('.feature-card');
+      
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const xPercent = x / rect.width - 0.5;
+          const yPercent = y / rect.height - 0.5;
+          
+          card.style.transform = `perspective(1000px) rotateX(${yPercent * -5}deg) rotateY(${xPercent * 5}deg) scale3d(1.02, 1.02, 1.02)`;
+          card.style.transition = 'transform 0.1s ease';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+          card.style.transition = 'transform 0.5s ease';
+        });
+      });
+    };
+    
+    addTiltEffect();
+    
+    return () => {
+      const cards = document.querySelectorAll('.feature-card');
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', () => {});
+        card.removeEventListener('mouseleave', () => {});
+      });
+    };
+  }, []);
   const service = getServiceById(params.id)
 
   if (!service) {
@@ -60,17 +102,33 @@ export default function ServicePage({ params }) {
 
   return (
     <>
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary/10 to-primary/5 py-16">
-        <div className="container mx-auto px-4">
-          <Link href="/services" className="text-sm text-muted-foreground hover:text-primary mb-8 inline-flex items-center">
-            <ArrowRight className="w-4 h-4 mr-1 rotate-180" /> Back to Services
-          </Link>
+      {/* Hero Section with 3D Animation */}
+      <div className="bg-gradient-to-r from-primary/20 via-primary/10 to-primary/5 py-16 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute w-64 h-64 rounded-full bg-primary/10 -top-20 -left-20 animate-blob"></div>
+          <div className="absolute w-72 h-72 rounded-full bg-primary/10 top-40 right-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute w-80 h-80 rounded-full bg-primary/10 bottom-10 left-20 animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Link href="/services" className="inline-flex items-center px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors mb-8 shadow-lg">
+              <ArrowLeft className="mr-2 w-5 h-5" /> Back to Services
+            </Link>
+          </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="flex items-center gap-4 mb-6">
-                <div className="p-4 rounded-xl bg-white text-primary shadow-sm">
+                <div className="p-4 rounded-xl bg-white text-primary shadow-md">
                   {Icon && <Icon className="w-10 h-10" />}
                 </div>
                 <h1 className="text-4xl font-bold">{service.title}</h1>
@@ -79,65 +137,122 @@ export default function ServicePage({ params }) {
               <p className="text-xl text-muted-foreground mb-8">{service.fullDescription}</p>
 
               <div className="flex flex-wrap gap-4">
-                <Link 
-                  href="/contact" 
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
-                >
-                  Get Started
-                </Link>
-                <Link 
-                  href="#features" 
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-primary bg-transparent text-primary hover:bg-primary/10 h-11 px-8"
-                >
-                  Learn More
-                </Link>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 shadow-lg"
+                  >
+                    Get Started
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="#features" 
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-primary bg-transparent text-primary hover:bg-primary/10 h-11 px-8"
+                  >
+                    Learn More
+                  </Link>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
-              <Image
-                src={service.image || "/placeholder.svg"}
-                alt={service.title}
-                fill
-                className="object-cover"
-              />
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-xl overflow-hidden shadow-xl"
+            >
+              <div className="aspect-video relative">
+                <Image
+                  src={`/assets/imgs/AI_automation_1.png`}
+                  alt={service.title}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    e.target.src = "/assets/imgs/development_1.png";
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="flex items-center gap-2 text-white">
+                    <Sparkles className="w-5 h-5" />
+                    <span className="font-bold">{service.title} Solutions</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div id="features" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+      {/* Features Section with 3D Cards */}
+      <div id="features" className="py-16 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30">
+          <div className="absolute w-96 h-96 rounded-full bg-primary/10 -top-20 -right-20"></div>
+          <div className="absolute w-96 h-96 rounded-full bg-primary/10 bottom-20 -left-20"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-3xl font-bold mb-4">Key Features</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Our {service.title} service includes a comprehensive set of features designed to meet your business needs.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {service.features.map((feature, index) => (
-              <div key={index} className="p-6 bg-gray-50 rounded-xl border border-gray-100 hover:shadow-md transition-all">
-                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
-                  <span className="font-bold">{index + 1}</span>
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all feature-card"
+              >
+                <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                  <span className="font-bold text-xl">{index + 1}</span>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{feature}</h3>
                 <p className="text-muted-foreground">
                   {/* In a real implementation, you would have detailed descriptions for each feature */}
                   Our {feature} capability provides comprehensive solutions tailored to your specific business requirements.
                 </p>
-              </div>
+                
+                {/* Feature icon based on index */}
+                <div className="mt-4 flex justify-end">
+                  {index % 6 === 0 && <Sparkles className="w-6 h-6 text-primary/60" />}
+                  {index % 6 === 1 && <Users className="w-6 h-6 text-primary/60" />}
+                  {index % 6 === 2 && <Zap className="w-6 h-6 text-primary/60" />}
+                  {index % 6 === 3 && <BarChart3 className="w-6 h-6 text-primary/60" />}
+                  {index % 6 === 4 && <Award className="w-6 h-6 text-primary/60" />}
+                  {index % 6 === 5 && <CheckCircle className="w-6 h-6 text-primary/60" />}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Expertise & Benefits Section */}
-      <div className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      {/* Expertise & Benefits Section with 3D Effects */}
+      <div className="py-16 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <div className="absolute w-96 h-96 rounded-full bg-primary/10 -bottom-20 -right-20"></div>
+          <div className="absolute w-96 h-96 rounded-full bg-primary/10 top-20 -left-20"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-3xl font-bold mb-6">Our Expertise</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 With years of experience in {service.title}, our team brings deep expertise and knowledge to every project.
@@ -145,14 +260,47 @@ export default function ServicePage({ params }) {
               
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {service.expertise.map((item, index) => (
-                  <div key={index} className="p-4 bg-white rounded-lg border border-gray-100 text-center hover:border-primary/30 hover:shadow-sm transition-all">
+                  <motion.div 
+                    key={index} 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ 
+                      y: -5, 
+                      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+                      backgroundColor: "rgba(var(--primary-rgb), 0.05)" 
+                    }}
+                    className="p-5 bg-white rounded-lg border border-gray-100 text-center hover:border-primary/30 transition-all feature-card"
+                  >
                     <span className="block text-primary font-medium">{item}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+              
+              {/* 3D Floating Image */}
+              <div className="mt-8 relative h-40 rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src={`/assets/imgs/development_1.png`}
+                  alt={`${service.title} Expertise`}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    e.target.src = "/assets/imgs/development_2.png";
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="font-bold">Expert {service.title} Team</div>
+                  <div className="text-sm">Years of industry experience</div>
+                </div>
+              </div>
+            </motion.div>
 
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-3xl font-bold mb-6">Benefits</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Our {service.title} service delivers tangible benefits that drive business growth and success.
@@ -160,8 +308,17 @@ export default function ServicePage({ params }) {
               
               <ul className="space-y-4">
                 {service.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-gray-100">
-                    <CheckCircle className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" />
+                  <motion.li 
+                    key={index} 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-3 bg-white p-5 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="p-2 bg-primary/10 text-primary rounded-full flex-shrink-0">
+                      <CheckCircle className="w-5 h-5" />
+                    </div>
                     <div>
                       <span className="font-medium">{benefit}</span>
                       {/* In a real implementation, you would have detailed descriptions for each benefit */}
@@ -169,10 +326,28 @@ export default function ServicePage({ params }) {
                         This benefit helps your business achieve greater efficiency and competitive advantage.
                       </p>
                     </div>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </div>
+              
+              {/* 3D Floating Image */}
+              <div className="mt-8 relative h-40 rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src={`/assets/imgs/Cloud_things_3.png`}
+                  alt={`${service.title} Benefits`}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    e.target.src = "/assets/imgs/development_3.png";
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="font-bold">Measurable Results</div>
+                  <div className="text-sm">Driving business growth and success</div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -222,71 +397,7 @@ export default function ServicePage({ params }) {
           </div>
         </div>
       </div>
-
-      {/* Case Studies Section */}
-      <div className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Case Studies</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              See how we've helped businesses achieve success with our {service.title} solutions.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {caseStudies.map((study, index) => (
-              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                <div className="aspect-video relative">
-                  <Image
-                    src={study.image}
-                    alt={study.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{study.title}</h3>
-                  <p className="text-muted-foreground mb-4">{study.description}</p>
-                  <Link href="/case-studie" className="text-primary font-medium inline-flex items-center">
-                    Read Case Study
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials Section */}
-      <div className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hear from businesses that have benefited from our {service.title} service.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="p-8 bg-gray-50 rounded-xl border border-gray-100">
-                <div className="mb-4 text-primary">
-                  <MessageSquare className="w-8 h-8" />
-                </div>
-                <blockquote className="text-lg italic mb-6">"{testimonial.quote}"</blockquote>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 mr-4"></div>
-                  <div>
-                    <div className="font-semibold">{testimonial.author}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.position}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+ 
 
       {/* FAQ Section */}
       <div className="py-16 bg-gray-50">

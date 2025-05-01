@@ -1,12 +1,13 @@
 export const siteData = {
   logo: "/assets/imgs/Logo.jpeg",
-  logoAlt: "Logo",
-  logoWidth: 100,
-  logoHeight: 60,
+  logoAlt: "Jsbglobalinfotech Logo",
+  logoWidth: 180,
+  logoHeight: 45,
   phoneNumber: "+91 92661 36004",
   email: "info@Jsbglobalinfotech.com",
   supportEmail: "info@Jsbglobalinfotech.com",
   companyName: "Jsbglobalinfotech",
+  address: "PLOT NO.I-151 IN KIRT SAGAR-I, Mansarovar, JAIPUR",
   socialLinks: [
     { icon: "iconoir-dribbble", url: "#" },
     { icon: "iconoir-twitter", url: "#" },
@@ -15,24 +16,6 @@ export const siteData = {
   ],
   navLinks: [
     { name: "Home", url: "/" },
-    {
-      name: "Company",
-      url: "/company",
-      megaMenu: true,
-      subMenu: [
-        { name: "About Us", url: "/about" },
-        { name: "Partners", url: "/partners" },
-        { name: "Careers", url: "/career" },
-        // { name: "Events", url: "/event" },
-        // { name: "Team", url: "/team" },
-        { name: "Blog", url: "/blog" },
-      ]
-    },
-    {
-      name: "Portfolio",
-      url: "/portfolio",
-      megaMenu: true,
-    },
     {
       name: "Services",
       url: "/services",
@@ -43,11 +26,30 @@ export const siteData = {
         { name: "Web Design", url: "/services/web-design" },
         { name: "IT Support", url: "/services/it-support" },
         { name: "E-Commerce", url: "/services/e-commerce" },
-        { name: "Cloud Things", url: "/services/cloud-things" },
+        { name: "Cloud Services", url: "/services/cloud-services" },
         { name: "CRM Solutions", url: "/services/crm-solutions" },
+        { name: "Brainstorming Ideas", url: "/services/brainstorming" },
+        { name: "Product Design", url: "/services/product-design" },
+        { name: "SEO Optimization", url: "/services/seo-optimization" },
       ]
     },
-    { name: "FAQ", url: "/faq" },
+    {
+      name: "About",
+      url: "/about",
+      megaMenu: false
+    },
+    {
+      name: "Products",
+      url: "/products",
+      megaMenu: true,
+      subMenu: [
+        { name: "Enterprise Management", url: "/products/enterprise-management" },
+        { name: "SaaS Solutions", url: "/products/saas" },
+        { name: "Custom Software", url: "/products/custom-software" },
+      ]
+    },
+    { name: "Portfolio", url: "/portfolio" },
+    { name: "Contact", url: "/contact" },
   ],
   footerLinks: {
     services: [

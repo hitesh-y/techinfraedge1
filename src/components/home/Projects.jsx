@@ -65,29 +65,35 @@ const Projects = () => {
     };
 
     return (
-        <section className="project-area">
-            <div className="custom-container">
-                <div className="custom-row justify-content-between">
-                    <div className="project-left-details">
-                        <h6 className="section-subtitle">PROJECTS</h6>
-                        <h2 className="section-title">Showcase of our recognized work</h2>
-                        <p>Our collaborative approach ensures that we truly understand our clients' unique requirements and challenges.</p>
-                        <ul>
-                            <li><i className="las la-check" /> Managed Services and Products</li>
-                            <li><i className="las la-check" /> Flexibility and Adaptability</li>
-                            <li><i className="las la-check" /> Competitive Advantage</li>
+        <section className="project-area bg-gray-900 py-16">
+            <div className="container mx-auto px-4">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+                    <div className="max-w-xl">
+                        <h6 className="text-indigo-400 font-medium mb-3 uppercase">PROJECTS</h6>
+                        <h2 className="text-4xl font-bold mb-4 text-white">Showcase of our recognized work</h2>
+                        <p className="text-gray-300 mb-6">Our collaborative approach ensures that we truly understand our clients' unique requirements and challenges.</p>
+                        <ul className="space-y-2 text-gray-300">
+                            <li className="flex items-center"><i className="las la-check text-indigo-400 mr-2" /> Managed Services and Products</li>
+                            <li className="flex items-center"><i className="las la-check text-indigo-400 mr-2" /> Flexibility and Adaptability</li>
+                            <li className="flex items-center"><i className="las la-check text-indigo-400 mr-2" /> Competitive Advantage</li>
                         </ul>
                     </div>
-                    <div className="project-right-slider">
+                    <div className="w-full md:w-1/2 lg:w-3/5">
                         <Slider {...settings}>
                             {projects.map((project) => (
-                                <div className="P-3">
-                                <div key={project.id} className="project-item" style={{ padding: '20px' }}>
-                                    <div className="project-item-inner">
-                                        <h3 className="section-subtitle p-2">{project.title}</h3>
-                                        <img src={project.img} alt={project.title} />
+                                <div key={project.id} className="p-3">
+                                    <div className="bg-gray-800 rounded-xl overflow-hidden border border-indigo-500/20">
+                                        <div className="p-4">
+                                            <h3 className="text-white font-medium text-lg mb-3">{project.title}</h3>
+                                            <div className="relative overflow-hidden rounded-lg">
+                                                <img 
+                                                    src={project.img} 
+                                                    alt={project.title} 
+                                                    className="w-full h-auto transition-transform duration-500 hover:scale-105"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             ))}
                         </Slider>
