@@ -45,10 +45,10 @@ export const siteData = {
       subMenu: [
         { name: "Enterprise Management", url: "/products/enterprise-management" },
         { name: "SaaS Solutions", url: "/products/saas" },
-        { name: "Custom Software", url: "/products/custom-software" },
+        // { name: "Custom Software", url: "/products/custom-software" },
       ]
     },
-    { name: "Portfolio", url: "/portfolio" },
+    // { name: "Portfolio", url: "/portfolio" },
     { name: "Contact", url: "/contact" },
   ],
   footerLinks: {
