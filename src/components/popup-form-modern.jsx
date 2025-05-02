@@ -124,7 +124,8 @@ const PopupFormModern = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-y-auto py-6 sm:py-10 md:py-16 lg:py-20 px-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-y-auto py-4 px-4 md:py-6 lg:py-10"
+        onClick={closePopup} // Close when clicking outside the modal
       >
         <motion.div 
           initial={{ scale: 0.9, opacity: 0 }}
@@ -132,14 +133,15 @@ const PopupFormModern = () => {
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
           className="relative w-full max-w-4xl bg-gradient-to-br from-gray-900 to-indigo-900 rounded-2xl shadow-2xl overflow-hidden my-auto"
+          onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
         >
-          {/* Close button */}
+          {/* Close button - improved positioning and size for mobile */}
           <button
             onClick={closePopup}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors z-10"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors z-20"
             aria-label="Close popup"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6" />
           </button>
 
           {/* Background elements */}
@@ -148,7 +150,7 @@ const PopupFormModern = () => {
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-600 rounded-full filter blur-3xl opacity-10 transform -translate-x-1/2 translate-y-1/2"></div>
           </div>
 
-          <div className="overflow-y-auto max-h-[80vh]">
+          <div className="overflow-y-auto max-h-[85vh] md:max-h-[80vh]">
             <div className="flex flex-col md:flex-row">
               {/* Left side content */}
               <div className="p-6 md:p-10 md:w-1/2 relative z-10">
