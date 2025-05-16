@@ -1,10 +1,9 @@
 'use client'
-import { siteData } from "@/data/siteData"
 import Link from "next/link" 
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { Mail, Phone, MapPin, Clock, ArrowRight, Send, ChevronUp, Globe, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 
 const FooterModern = () => {
@@ -13,6 +12,60 @@ const FooterModern = () => {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [subscribeStatus, setSubscribeStatus] = useState(null)
+  const [services, setServices] = useState([])
+  const [siteSettings, setSiteSettings] = useState({
+    logo: "/placeholder.svg",
+    companyName: "Company Name",
+    address: "123 Street Name, City, Country",
+    phoneNumber: "+1 (123) 456-7890",
+    email: "info@example.com",
+    socialLinks: {
+      facebook: "#",
+      twitter: "#",
+      instagram: "#",
+      linkedin: "#"
+    },
+    footerLinks: {
+      services: [],
+      company: [
+        { name: "About Us", url: "/about" },
+        { name: "Our Team", url: "/team" },
+        { name: "Careers", url: "/careers" },
+        { name: "Contact", url: "/contact" }
+      ]
+    },
+    address1: { country: "USA", number: "+1 (123) 456-7890" },
+    address2: { country: "UK", number: "+44 (123) 456-7890" }
+  })
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch services
+        const servicesResponse = await fetch('/api/services');
+        if (servicesResponse.ok) {
+          const servicesData = await servicesResponse.json();
+          // Only show active services and limit to 7 for the footer
+          const activeServices = servicesData
+            .filter(service => service.isActive)
+            .sort((a, b) => a.order - b.order)
+            .slice(0, 7);
+          setServices(activeServices);
+        }
+        
+        // Fetch site settings
+        const settingsResponse = await fetch('/api/settings');
+        if (settingsResponse.ok) {
+          const settingsData = await settingsResponse.json();
+          setSiteSettings(settingsData);
+        }
+      } catch (error) {
+        console.error('Error fetching data for footer:', error);
+      }
+    };
+    
+    fetchData();
+  }, [])
   
   const handleSubscribe = (e) => {
     e.preventDefault()
@@ -59,8 +112,8 @@ const FooterModern = () => {
           >
             <Link href="/" className="inline-block mb-6">
               <Image 
-                src={siteData.logo || "/placeholder.svg"} 
-                alt={siteData.companyName} 
+                src={siteSettings.logo || "/placeholder.svg"} 
+                alt={siteSettings?.companyName || "Company Logo"} 
                 width={150} 
                 height={40} 
                 className="h-10 w-auto" 
@@ -103,22 +156,42 @@ const FooterModern = () => {
             </h3>
             
             <ul className="space-y-3">
-              {siteData.footerLinks.services.map((link, index) => (
-                <motion.li 
-                  key={index}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                  transition={{ duration: 0.3, delay: 0.2 + (index * 0.05) }}
-                >
-                  <Link 
-                    href={link.url}
-                    className="text-gray-400 hover:text-indigo-400 transition-colors flex items-center group"
+              {Array.isArray(services) && services.length > 0 ? (
+                services.map((service, index) => (
+                  <motion.li 
+                    key={service._id || index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3, delay: 0.2 + (index * 0.05) }}
                   >
-                    <ArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300" />
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
+                    <Link 
+                      href={`/services/${service.slug}`}
+                      className="text-gray-400 hover:text-indigo-400 transition-colors flex items-center group"
+                    >
+                      <ArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300" />
+                      {service.title}
+                    </Link>
+                  </motion.li>
+                ))
+              ) : (
+                // Fallback to static services if API fails
+                siteSettings.footerLinks.services.map((link, index) => (
+                  <motion.li 
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3, delay: 0.2 + (index * 0.05) }}
+                  >
+                    <Link 
+                      href={link.url}
+                      className="text-gray-400 hover:text-indigo-400 transition-colors flex items-center group"
+                    >
+                      <ArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300" />
+                      {link.name}
+                    </Link>
+                  </motion.li>
+                ))
+              )}
             </ul>
           </motion.div>
 
@@ -135,7 +208,7 @@ const FooterModern = () => {
             </h3>
             
             <ul className="space-y-3">
-              {siteData.footerLinks.company.map((link, index) => (
+              {siteSettings.footerLinks?.company.map((link, index) => (
                 <motion.li 
                   key={index}
                   initial={{ opacity: 0, x: -10 }}
@@ -242,22 +315,22 @@ const FooterModern = () => {
             <div className="space-y-3">
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 text-indigo-400 mr-3 mt-1" />
-                <span className="text-gray-400">{siteData.address}</span>
+                <span className="text-gray-400">{siteSettings.address}</span>
               </div>
               
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-indigo-400 mr-3" />
-                <span className="text-gray-400">{siteData.phoneNumber}</span>
+                <span className="text-gray-400">{siteSettings?.phoneNumber}</span>
               </div>
               
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-indigo-400 mr-3" />
-                <span className="text-gray-400">{siteData.email}</span>
+                <span className="text-gray-400">{siteSettings.email}</span>
               </div>
               
               <div className="flex items-center">
                 <Globe className="w-5 h-5 text-indigo-400 mr-3" />
-                <span className="text-gray-400">www.techinfraedge.com</span>
+                <span className="text-gray-400">www.jsbglobalinfotech.com</span>
               </div>
             </div>
           </motion.div>
@@ -271,7 +344,7 @@ const FooterModern = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-gray-500 text-center md:text-left mb-4 md:mb-0"
           >
-            © {new Date().getFullYear()} {siteData.companyName}. All rights reserved.
+            © {new Date().getFullYear()} {siteSettings?.companyName}. All rights reserved.
           </motion.p>
           
           <motion.button
@@ -298,12 +371,12 @@ const FooterModern = () => {
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
               <div className="flex items-center">
                 <span className="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
-                <span className="text-gray-400">{siteData.address1.country}: {siteData.address1.number}</span>
+                <span className="text-gray-400">{siteSettings.address1?.country || "USA"}: {siteSettings.address1?.number || "+1 (123) 456-7890"}</span>
               </div>
               
               <div className="flex items-center">
                 <span className="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
-                <span className="text-gray-400">{siteData.address2.country}: {siteData.address2.number}</span>
+                <span className="text-gray-400">{siteSettings.address2?.country || "UK"}: {siteSettings.address2?.number || "+44 (123) 456-7890"}</span>
               </div>
             </div>
           </div>

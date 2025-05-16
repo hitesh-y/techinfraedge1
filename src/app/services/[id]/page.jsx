@@ -3,15 +3,40 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation" 
-import { CheckCircle, ArrowRight, ArrowLeft, Clock, Users, BarChart3, Award, Zap, MessageSquare, Sparkles } from "lucide-react"
-import { getServiceById } from "@/data/servicesData"
+import { CheckCircle, ArrowRight, ArrowLeft, Clock, Users, BarChart3, Award, Zap, MessageSquare, Sparkles } from "lucide-react" 
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
+import * as LucideIcons from "lucide-react"
 
 export default function ServicePage({ params }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const serviceId = params?.id; // Safely access id property
   
   useEffect(() => {
+    if (!serviceId) return; // Guard against undefined params
+    
+    // Fetch service data from API
+    const fetchService = async () => {
+      try {
+        const response = await fetch(`/api/services?id=${serviceId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setService(data);
+        } else { 
+          setService(null);
+        }
+      } catch (error) {
+        console.error('Error fetching service:', error);
+        // No fallback to static data
+        setService(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchService();
     setIsLoaded(true);
     
     // Add 3D tilt effect to feature cards
@@ -19,7 +44,7 @@ export default function ServicePage({ params }) {
       const cards = document.querySelectorAll('.feature-card');
       
       cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
+        const handleMouseMove = (e) => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
@@ -29,32 +54,60 @@ export default function ServicePage({ params }) {
           
           card.style.transform = `perspective(1000px) rotateX(${yPercent * -5}deg) rotateY(${xPercent * 5}deg) scale3d(1.02, 1.02, 1.02)`;
           card.style.transition = 'transform 0.1s ease';
-        });
+        };
         
-        card.addEventListener('mouseleave', () => {
+        const handleMouseLeave = () => {
           card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
           card.style.transition = 'transform 0.5s ease';
-        });
+        };
+        
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
+        
+        // Store event handlers for proper cleanup
+        card._tiltHandlers = {
+          move: handleMouseMove,
+          leave: handleMouseLeave
+        };
       });
     };
     
-    addTiltEffect();
+    if (isLoaded) {
+      addTiltEffect();
+    }
     
     return () => {
       const cards = document.querySelectorAll('.feature-card');
       cards.forEach(card => {
-        card.removeEventListener('mousemove', () => {});
-        card.removeEventListener('mouseleave', () => {});
+        if (card._tiltHandlers) {
+          card.removeEventListener('mousemove', card._tiltHandlers.move);
+          card.removeEventListener('mouseleave', card._tiltHandlers.leave);
+        }
       });
     };
-  }, []);
-  const service = getServiceById(params.id)
+  }, [serviceId, isLoaded]);
+  
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   if (!service) {
     notFound()
   }
 
-  const Icon = service.icon
+  // Handle dynamic icon from string name
+  let Icon = LucideIcons.Sparkles;
+  if (service.icon) {
+    if (typeof service.icon === 'string') {
+      Icon = LucideIcons[service.icon] || LucideIcons.Sparkles;
+    } else if (typeof service.icon === 'object') {
+      Icon = service.icon;
+    }
+  }
 
   // Sample case studies - in a real implementation, these would be filtered based on the service
   const caseStudies = [
@@ -134,7 +187,7 @@ export default function ServicePage({ params }) {
                 <h1 className="text-4xl font-bold">{service.title}</h1>
               </div>
 
-              <p className="text-xl text-muted-foreground mb-8">{service.fullDescription}</p>
+              <p className="text-xl text-muted-foreground mb-8">{service.fullDescription || service.description || service.shortDescription}</p>
 
               <div className="flex flex-wrap gap-4">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -166,8 +219,9 @@ export default function ServicePage({ params }) {
                 <Image
                   src={`/assets/imgs/AI_automation_1.png`}
                   alt={service.title}
-                  fill
-                  className="object-cover"
+                  width={1200}
+                  height={675}
+                  className="object-cover w-full h-full absolute inset-0"
                   onError={(e) => {
                     e.target.src = "/assets/imgs/development_1.png";
                   }}
@@ -206,7 +260,8 @@ export default function ServicePage({ params }) {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {service.features.map((feature, index) => (
+            {service.features && service.features.length > 0 ? (
+              service.features.map((feature, index) => (
               <motion.div 
                 key={index} 
                 initial={{ opacity: 0, y: 30 }}
@@ -234,7 +289,38 @@ export default function ServicePage({ params }) {
                   {index % 6 === 5 && <CheckCircle className="w-6 h-6 text-primary/60" />}
                 </div>
               </motion.div>
-            ))}
+            ))
+            ) : (
+              // Default features if none are provided
+              [
+                "Customized Solutions", 
+                "Expert Implementation", 
+                "Ongoing Support"
+              ].map((feature, index) => (
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  className="p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all feature-card"
+                >
+                  <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                    <span className="font-bold text-xl">{index + 1}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">{feature}</h3>
+                  <p className="text-muted-foreground">
+                    Our {feature} capability provides comprehensive solutions tailored to your specific business requirements.
+                  </p>
+                  
+                  <div className="mt-4 flex justify-end">
+                    {index % 3 === 0 && <Sparkles className="w-6 h-6 text-primary/60" />}
+                    {index % 3 === 1 && <Users className="w-6 h-6 text-primary/60" />}
+                    {index % 3 === 2 && <Zap className="w-6 h-6 text-primary/60" />}
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -259,7 +345,8 @@ export default function ServicePage({ params }) {
               </p>
               
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {service.expertise.map((item, index) => (
+                {service.expertise && service.expertise.length > 0 ? (
+                  service.expertise.map((item, index) => (
                   <motion.div 
                     key={index} 
                     initial={{ opacity: 0, y: 20 }}
@@ -274,7 +361,26 @@ export default function ServicePage({ params }) {
                   >
                     <span className="block text-primary font-medium">{item}</span>
                   </motion.div>
-                ))}
+                ))
+                ) : (
+                  // Default expertise if none are provided
+                  ["Industry Knowledge", "Technical Proficiency", "Project Management", "Quality Assurance", "Client Communication", "Continuous Learning"].map((item, index) => (
+                    <motion.div 
+                      key={index} 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ 
+                        y: -5, 
+                        boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+                        backgroundColor: "rgba(var(--primary-rgb), 0.05)" 
+                      }}
+                      className="p-5 bg-white rounded-lg border border-gray-100 text-center hover:border-primary/30 transition-all feature-card"
+                    >
+                      <span className="block text-primary font-medium">{item}</span>
+                    </motion.div>
+                  ))
+                )}
               </div>
               
               {/* 3D Floating Image */}
@@ -307,7 +413,8 @@ export default function ServicePage({ params }) {
               </p>
               
               <ul className="space-y-4">
-                {service.benefits.map((benefit, index) => (
+                {service.benefits && service.benefits.length > 0 ? (
+                  service.benefits.map((benefit, index) => (
                   <motion.li 
                     key={index} 
                     initial={{ opacity: 0, y: 20 }}
@@ -327,7 +434,36 @@ export default function ServicePage({ params }) {
                       </p>
                     </div>
                   </motion.li>
-                ))}
+                ))
+                ) : (
+                  // Default benefits if none are provided
+                  [
+                    "Increased Efficiency", 
+                    "Cost Reduction", 
+                    "Improved Quality", 
+                    "Enhanced Customer Satisfaction",
+                    "Competitive Advantage"
+                  ].map((benefit, index) => (
+                    <motion.li 
+                      key={index} 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ x: 5 }}
+                      className="flex items-start gap-3 bg-white p-5 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-all"
+                    >
+                      <div className="p-2 bg-primary/10 text-primary rounded-full flex-shrink-0">
+                        <CheckCircle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="font-medium">{benefit}</span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          This benefit helps your business achieve greater efficiency and competitive advantage.
+                        </p>
+                      </div>
+                    </motion.li>
+                  ))
+                )}
               </ul>
               
               {/* 3D Floating Image */}

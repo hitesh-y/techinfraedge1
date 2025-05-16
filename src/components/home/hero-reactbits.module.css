@@ -1,0 +1,217 @@
+/* Optimized CSS for HeroReactBits component */
+
+.heroContainer {
+  position: relative;
+  height: 600px;
+  width: 100%;
+  overflow: hidden;
+  contain: content;
+}
+
+@media (min-width: 768px) {
+  .heroContainer {
+    height: 700px;
+  }
+}
+
+.slideContainer {
+  position: absolute;
+  inset: 0;
+  transition: opacity 700ms ease;
+  min-height: 600px;
+  height: 100%;
+}
+
+.slideActive {
+  opacity: 1;
+  z-index: 10;
+}
+
+.slideInactive {
+  opacity: 0;
+  z-index: 0;
+}
+
+.imageContainer {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #111827;
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.3));
+  z-index: 10;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 20;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  height: 4px;
+  background-color: #e5e7eb;
+}
+
+.progressIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(to right, #4F46E5, #9333EA);
+  transition: width 6s linear;
+  will-change: width;
+  transform: translateZ(0);
+}
+
+.navigationContainer {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  z-index: 30;
+}
+
+.navigationFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slideNumbers {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .slideNumbers {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+.slideButton {
+  display: flex;
+  align-items: center;
+  transition: all 300ms ease;
+}
+
+.slideButtonActive {
+  color: #4F46E5;
+}
+
+.slideButtonInactive {
+  color: #6B7280;
+}
+
+.slideButtonInactive:hover {
+  color: #1F2937;
+}
+
+.slideNumber {
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.slideTitle {
+  font-size: 14px;
+  color: #374151;
+  transition: all 300ms ease;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.slideTitleActive {
+  max-width: 120px;
+  opacity: 1;
+}
+
+.slideTitleInactive:hover {
+  max-width: 120px;
+  opacity: 1;
+}
+
+.mobileDots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .mobileDots {
+    display: none;
+  }
+}
+
+.dot {
+  height: 12px;
+  border-radius: 9999px;
+  transition: all 300ms ease;
+}
+
+.dotActive {
+  background: linear-gradient(to right, #4F46E5, #9333EA);
+  width: 32px;
+}
+
+.dotInactive {
+  background-color: #d1d5db;
+  width: 12px;
+}
+
+.dotInactive:hover {
+  background-color: #9ca3af;
+}
+
+.arrowButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  transition: all 150ms ease;
+}
+
+.arrowButton:hover {
+  background-color: #f9fafb;
+}
+
+.arrowButton:active {
+  transform: scale(0.95);
+}
+
+/* Optimize for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slideContainer {
+    transition: opacity 100ms ease;
+  }
+  
+  .progressIndicator {
+    transition: none;
+  }
+}

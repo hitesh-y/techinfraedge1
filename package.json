@@ -1,5 +1,5 @@
 {
-  "name": "techinfraedge",
+  "name": "jsbglobalinfotech",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "critters": "^0.0.23",
+    "dotenv": "^16.5.0",
     "framer-motion": "^12.9.2",
     "lucide-react": "^0.475.0",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.14.1",
+    "multer": "^1.4.5-lts.2",
     "next": "15.1.5",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-bits": "^1.0.5",
     "react-dom": "^19.0.0",

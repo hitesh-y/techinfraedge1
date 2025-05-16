@@ -1,6 +1,5 @@
 "use client"
-import { siteData } from "@/data/siteData"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
 import { MapPin, Phone, Globe } from "lucide-react"
 
@@ -8,20 +7,48 @@ const ContactLocations = () => {
   const locationsRef = useRef(null)
   const isInView = useInView(locationsRef, { once: true, amount: 0.1 })
   const [activeLocation, setActiveLocation] = useState("india")
+  const [siteSettings, setSiteSettings] = useState({
+    address1: {
+      country: "India",
+      address: "123 Street, City, State, India",
+      number: "+91 1234567890"
+    },
+    address2: {
+      country: "UAE",
+      address: "456 Street, City, UAE",
+      number: "+971 1234567890"
+    }
+  })
+  
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch('/api/settings');
+        if (response.ok) {
+          const data = await response.json();
+          setSiteSettings(data);
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+      }
+    };
+    
+    fetchSettings();
+  }, []);
   
   const locations = [
     {
       id: "india",
-      country: siteData.address1.country,
-      address: siteData.address1.address,
-      phone: siteData.address1.number,
+      country: siteSettings.address1?.country || "India",
+      address: siteSettings.address1?.address || "123 Street, City, State, India",
+      phone: siteSettings.address1?.number || "+91 1234567890",
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.1757538408585!2d75.7667!3d26.8567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5bca6295ad5%3A0x9d8d243dd5212da8!2sMansarovar%2C%20Jaipur%2C%20Rajasthan%20302020!5e0!3m2!1sen!2sin!4v1623456789012!5m2!1sen!2sin"
     },
     {
       id: "uae",
-      country: siteData.address2.country,
-      address: siteData.address2.address,
-      phone: siteData.address2.number,
+      country: siteSettings.address2?.country || "UAE",
+      address: siteSettings.address2?.address || "456 Street, City, UAE",
+      phone: siteSettings.address2?.number || "+971 1234567890",
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.4629876543217!2d55.3456!3d25.2345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5c2a5d9a3b0b%3A0x1234567890abcdef!2sDeira%2C%20Dubai%2C%20UAE!5e0!3m2!1sen!2sae!4v1623456789012!5m2!1sen!2sae"
     }
   ]

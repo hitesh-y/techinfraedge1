@@ -71,19 +71,26 @@ const PopupFormModern = () => {
   const onSubmit = async (data) => {
     setIsSubmitting(true)
     
-    // Simulate API call
     try {
-      // Here you would typically send the data to your backend
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data),
-      // });
+      // Send the data to the API
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.fullName,
+          email: data.email,
+          phone: data.phone || '',
+          message: data.message || '',
+          service: data.service || selectedService,
+          budget: data.budget || '',
+          formType: 'popup'
+        }),
+      });
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
       
-      console.log("Form data:", data)
       setIsSubmitting(false)
       setIsSubmitted(true)
       

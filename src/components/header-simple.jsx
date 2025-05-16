@@ -9,6 +9,81 @@ export default function HeaderSimple() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const [activeDropdown, setActiveDropdown] = useState(null)
+    const [navLinks, setNavLinks] = useState(siteData.navLinks)
+    const [services, setServices] = useState([])
+    const [siteSettings, setSiteSettings] = useState(siteData)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        // Fetch services for the dropdown menu
+        const fetchServices = async () => {
+            try {
+                const response = await fetch('/api/services');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Only show active services
+                    const activeServices = data
+                        .filter(service => service.isActive)
+                        .sort((a, b) => a.order - b.order);
+                    setServices(activeServices);
+                    
+                    // Update the services submenu in navLinks
+                    updateServicesInNavLinks(activeServices);
+                }
+            } catch (error) {
+                console.error('Error fetching services for header:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        
+        // Fetch site settings
+        const fetchSiteSettings = async () => {
+            try {
+                const response = await fetch('/api/settings');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data) {
+                        setSiteSettings({
+                            ...siteData,
+                            ...data
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching site settings:', error);
+            }
+        };
+        
+        fetchServices();
+        fetchSiteSettings();
+    }, []);
+    
+    // Update the services submenu in navLinks
+    const updateServicesInNavLinks = (services) => {
+        const updatedNavLinks = [...navLinks];
+        
+        // Find the Services link
+        const servicesLinkIndex = updatedNavLinks.findIndex(
+            link => link.name === "Services"
+        );
+        
+        if (servicesLinkIndex !== -1) {
+            // Create submenu items from services
+            const serviceSubmenu = services.map(service => ({
+                name: service.title,
+                url: `/services/${service.slug}`
+            }));
+            
+            // Update the submenu
+            updatedNavLinks[servicesLinkIndex] = {
+                ...updatedNavLinks[servicesLinkIndex],
+                subMenu: serviceSubmenu
+            };
+            
+            setNavLinks(updatedNavLinks);
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -41,19 +116,26 @@ export default function HeaderSimple() {
                         <div className="flex items-center space-x-6">
                             <div className="flex items-center space-x-2">
                                 <Phone size={14} className="text-indigo-200" />
-                                <span className="text-sm">{siteData.phoneNumber}</span>
+                                <span className="text-sm">{siteSettings.phoneNumber}</span>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Mail size={14} className="text-indigo-200" />
-                                <span className="text-sm">{siteData.email}</span>
+                                <span className="text-sm">{siteSettings.email}</span>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            {siteData.socialLinks.map((social, index) => (
-                                <a key={index} href={social.url} className="text-indigo-200 hover:text-white transition-colors">
-                                    <i className={social.icon} />
-                                </a>
-                            ))}
+                            {Array.isArray(siteSettings.socialLinks) 
+                                ? siteSettings.socialLinks.map((social, index) => (
+                                    <a key={index} href={social.url} className="text-indigo-200 hover:text-white transition-colors">
+                                        <i className={social.icon} />
+                                    </a>
+                                ))
+                                : siteData.socialLinks.map((social, index) => (
+                                    <a key={index} href={social.url} className="text-indigo-200 hover:text-white transition-colors">
+                                        <i className={social.icon} />
+                                    </a>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
@@ -70,11 +152,14 @@ export default function HeaderSimple() {
                         <div className="flex items-center">
                             <Link href="/" className="mr-8">
                                 <Image 
-                                    src={siteData.logo || "/placeholder.svg"} 
-                                    alt={siteData.title} 
+                                    src={siteSettings.logo || "/placeholder.svg"} 
+                                    alt={siteSettings?.companyName} 
                                     width={150} 
                                     height={40} 
                                     className="h-10 w-auto" 
+                                    onError={(e) => {
+                                        e.target.src = "/placeholder.svg";
+                                    }}
                                 />
                             </Link>
                         </div>
@@ -82,7 +167,7 @@ export default function HeaderSimple() {
                         {/* Desktop Navigation */}
                         <nav className="hidden lg:block">
                             <ul className="flex space-x-1">
-                                {siteData.navLinks.map((link, index) => (
+                                {Array.isArray(navLinks) && navLinks.map((link, index) => (
                                     <li key={index} className="relative dropdown-container">
                                         <Link 
                                             href={link.url} 
@@ -97,18 +182,28 @@ export default function HeaderSimple() {
                                         {link.megaMenu && link.subMenu && (
                                             <div className="dropdown-menu absolute left-0 top-full w-max bg-white shadow-xl rounded-md z-50 mt-1 hidden">
                                                 <div className="p-4">
-                                                    <ul className="grid grid-cols-2 gap-2 min-w-[320px]">
-                                                        {link.subMenu.map((subLink, subIndex) => (
-                                                            <li key={subIndex}>
-                                                                <Link 
-                                                                    href={subLink.url} 
-                                                                    className="block px-4 py-2 hover:bg-indigo-50 rounded-md text-gray-700 hover:text-indigo-600 transition-colors"
-                                                                >
-                                                                    {subLink.name}
-                                                                </Link>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
+                                                    {link.name === "Services" && isLoading ? (
+                                                        // Loading placeholder for services
+                                                        <div className="min-w-[320px]">
+                                                            <div className="h-6 bg-gray-200 rounded w-3/4 mb-3 animate-pulse"></div>
+                                                            <div className="h-6 bg-gray-200 rounded w-2/3 mb-3 animate-pulse"></div>
+                                                            <div className="h-6 bg-gray-200 rounded w-4/5 mb-3 animate-pulse"></div>
+                                                            <div className="h-6 bg-gray-200 rounded w-3/5 mb-3 animate-pulse"></div>
+                                                        </div>
+                                                    ) : (
+                                                        <ul className="grid grid-cols-2 gap-2 min-w-[320px]">
+                                                            {link.subMenu.map((subLink, subIndex) => (
+                                                                <li key={subIndex}>
+                                                                    <Link 
+                                                                        href={subLink.url} 
+                                                                        className="block px-4 py-2 hover:bg-indigo-50 rounded-md text-gray-700 hover:text-indigo-600 transition-colors"
+                                                                    >
+                                                                        {subLink.name}
+                                                                    </Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
                                                 </div>
                                             </div>
                                         )}
@@ -124,7 +219,7 @@ export default function HeaderSimple() {
                                     className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors font-medium"
                                 >
                                     Contact Us
-                                </Link>
+                                </Link> 
                             </div>
                             
                             <button 
@@ -145,11 +240,14 @@ export default function HeaderSimple() {
                     <div className="absolute right-0 top-0 h-full w-[300px] bg-white shadow-xl overflow-y-auto">
                         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
                             <Image 
-                                src={siteData.logo || "/placeholder.svg"} 
-                                alt={siteData.title} 
+                                src={siteSettings.logo || "/placeholder.svg"} 
+                                alt={siteSettings?.companyName} 
                                 width={120} 
                                 height={30} 
                                 className="h-8 w-auto" 
+                                onError={(e) => {
+                                    e.target.src = "/placeholder.svg";
+                                }}
                             />
                             <button 
                                 onClick={toggleMobileMenu}
@@ -161,7 +259,19 @@ export default function HeaderSimple() {
                         
                         <div className="p-4">
                             <ul className="space-y-4">
-                                {siteData.navLinks.map((link, index) => (
+                                <li className="border-b border-gray-200 pb-4">
+                                    <Link 
+                                        href="/admin/dashboard" 
+                                        className="text-gray-700 font-medium flex items-center"
+                                        onClick={toggleMobileMenu}
+                                    >
+                                        <span className="bg-gray-100 p-1 rounded-md mr-2">
+                                            <Menu size={16} />
+                                        </span>
+                                        Dashboard
+                                    </Link>
+                                </li>
+                                {Array.isArray(navLinks) && navLinks.map((link, index) => (
                                     <li key={index} className="border-b border-gray-200 pb-4">
                                         <div className="flex items-center justify-between">
                                             <Link 
@@ -186,17 +296,26 @@ export default function HeaderSimple() {
                                         
                                         {link.megaMenu && link.subMenu && activeDropdown === link.name && (
                                             <div className="pl-4 pt-4 space-y-2 border-l border-indigo-200 mt-4">
-                                                {link.subMenu.map((subLink, subIndex) => (
-                                                    <div key={subIndex}>
-                                                        <Link 
-                                                            href={subLink.url} 
-                                                            className="block py-2 text-gray-600 hover:text-indigo-600 transition-colors"
-                                                            onClick={toggleMobileMenu}
-                                                        >
-                                                            {subLink.name}
-                                                        </Link>
-                                                    </div>
-                                                ))}
+                                                {link.name === "Services" && isLoading ? (
+                                                    // Loading placeholders for services
+                                                    <>
+                                                        <div className="h-6 bg-gray-200 rounded w-3/4 mb-3 animate-pulse"></div>
+                                                        <div className="h-6 bg-gray-200 rounded w-2/3 mb-3 animate-pulse"></div>
+                                                        <div className="h-6 bg-gray-200 rounded w-4/5 mb-3 animate-pulse"></div>
+                                                    </>
+                                                ) : (
+                                                    link.subMenu.map((subLink, subIndex) => (
+                                                        <div key={subIndex}>
+                                                            <Link 
+                                                                href={subLink.url} 
+                                                                className="block py-2 text-gray-600 hover:text-indigo-600 transition-colors"
+                                                                onClick={toggleMobileMenu}
+                                                            >
+                                                                {subLink.name}
+                                                            </Link>
+                                                        </div>
+                                                    ))
+                                                )}
                                             </div>
                                         )}
                                     </li>

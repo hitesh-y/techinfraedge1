@@ -30,7 +30,7 @@ const ContactForm = () => {
     }))
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setFormStatus({
       isSubmitting: true,
@@ -39,8 +39,21 @@ const ContactForm = () => {
       message: ""
     })
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Send the data to the API
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          formType: 'contact'
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+      
       setFormStatus({
         isSubmitting: false,
         isSubmitted: true,
@@ -66,7 +79,15 @@ const ContactForm = () => {
           message: ""
         })
       }, 5000)
-    }, 1500)
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        isError: true,
+        message: "There was an error submitting your message. Please try again."
+      })
+    }
   }
   
   return (
@@ -221,12 +242,12 @@ const ContactForm = () => {
                     <div>
                       <h3 className="text-xl font-semibold text-white mb-2">Email Us</h3>
                       <p className="text-gray-400 mb-1">For general inquiries:</p>
-                      <a href="mailto:info@techinfraedge.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-                        info@techinfraedge.com
+                      <a href="mailto:info@jsbglobalinfotech.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+                        info@jsbglobalinfotech.com
                       </a>
                       <p className="text-gray-400 mt-2 mb-1">For support:</p>
-                      <a href="mailto:support@techinfraedge.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-                        support@techinfraedge.com
+                      <a href="mailto:support@jsbglobalinfotech.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+                        support@jsbglobalinfotech.com
                       </a>
                     </div>
                   </div>

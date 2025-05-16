@@ -1,0 +1,53 @@
+/* Optimized animations for better performance */
+@keyframes gradient {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes shimmer {
+  0% { background-position: -100% 0 }
+  100% { background-position: 100% 0 }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Optimize animations for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize for GPU acceleration */
+.gpu-accelerated {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Prevent layout shifts */
+.prevent-cls {
+  content-visibility: auto;
+  contain-intrinsic-size: auto;
+}
+
+/* Optimize image rendering */
+.optimize-image {
+  image-rendering: auto;
+  object-fit: cover;
+  background-color: #f3f4f6; /* Light gray placeholder */
+}
+
+/* Optimize text rendering */
+.optimize-text {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

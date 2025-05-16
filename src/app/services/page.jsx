@@ -1,17 +1,42 @@
 "use client"
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { services } from "@/data/servicesData";
+// Using dynamic data from API instead of static data
 import { ArrowRight, CheckCircle, Zap, Users, BarChart3, Globe, Sparkles } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function ServicesPage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    setIsLoaded(true);
+    // Fetch services from API
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/services');
+        if (response.ok) {
+          const data = await response.json();
+          setServices(data);
+        } else {
+          console.error('Failed to fetch services');
+          setServices([]);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        setServices([]);
+      } finally {
+        setLoading(false);
+        setIsLoaded(true);
+      }
+    };
+    
+    fetchServices();
     
     // Add 3D tilt effect to service cards
     const addTiltEffect = () => {
@@ -224,8 +249,18 @@ export default function ServicesPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+          {loading ? (
+            <div className="flex items-center justify-center min-h-[300px]">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            </div>
+          ) : services.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-100">
+              <h3 className="text-xl font-semibold mb-2">No services found</h3>
+              <p className="text-muted-foreground">Please check back later for our service offerings.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => (
               <motion.div
                 key={service.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -234,12 +269,18 @@ export default function ServicesPage() {
                 whileHover={{ y: -10 }}
               >
                 <Link 
-                  href={`/services/${service.id}`}
+                  href={`/services/${service._id || service.id}`}
                   className="group block p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition-all border border-gray-100 hover:border-primary/20 service-card h-full"
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="p-4 rounded-xl bg-primary/10 text-primary">
-                      {service.icon && <service.icon className="w-8 h-8" />}
+                      {service.icon ? (
+                        typeof service.icon === 'string' && service.icon in LucideIcons ? 
+                          React.createElement(LucideIcons[service.icon], { className: "w-8 h-8" }) : 
+                          <Sparkles className="w-8 h-8" />
+                      ) : (
+                        <Sparkles className="w-8 h-8" />
+                      )}
                     </div>
                     <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
                       {service.title}
@@ -248,7 +289,7 @@ export default function ServicesPage() {
                   
                   <div className="relative mb-6 h-40 rounded-lg overflow-hidden">
                     <Image
-                      src={`/assets/imgs/${service.id}_1.png`}
+                      src={service.image || `/assets/imgs/${service._id || service.id}_1.png`}
                       alt={service.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -260,12 +301,19 @@ export default function ServicesPage() {
                   
                   <p className="text-muted-foreground mb-4">{service.shortDescription}</p>
                   <ul className="mb-4 space-y-2">
-                    {service.features.slice(0, 3).map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                    {service.features && service.features.length > 0 ? 
+                      service.features.slice(0, 3).map((feature, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      )) : (
+                        <li className="flex items-start gap-2 text-sm text-gray-600">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <span>Professional service delivery</span>
+                        </li>
+                      )
+                    }
                   </ul>
                   <span className="text-primary font-medium inline-flex items-center">
                     Learn more
@@ -273,8 +321,9 @@ export default function ServicesPage() {
                   </span>
                 </Link>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

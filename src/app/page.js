@@ -1,7 +1,6 @@
 import AboutLight from "@/components/home/about-light";
 import Casestudio from "@/components/home/casestudio-new";
 import ClientModern from "@/components/home/client-modern"; 
-import HeroLight from "@/components/home/hero-light";
 import HeroReactBits from "@/components/home/hero-reactbits";
 import HowwedoModern from "@/components/home/howwedo-modern";
 import ProjectsModern from "@/components/home/projects-modern";
@@ -49,15 +48,18 @@ export const metadata = {
 
 export default function Home() {
   return (
-  <>
- <HeroReactBits />
-  <ClientModern/>
-  <HowwedoModern/>
-  <ServiceAnimatedLight/>
-  <Casestudio/>
-  <AboutLight/>
-  <TestimonialsLight/>
-  <ProjectsModern/>
-  </>
+    <>
+      {/* Critical for LCP - load immediately */}
+      <HeroReactBits />
+      
+      {/* Non-critical sections */}
+      <ClientModern />
+      <HowwedoModern />
+      <ServiceAnimatedLight />
+      <Casestudio />
+      <AboutLight />
+      <TestimonialsLight />
+      <ProjectsModern />
+    </>
   );
 }
